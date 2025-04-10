@@ -1,11 +1,11 @@
 import { Text, TouchableOpacity } from "react-native";
-import React from "react";
 
 type Props = {
-    onPress?: () => void;
-  };
+  text: string;
+  onPress?: () => void;
+};
 
-const PrimaryButton = ({ onPress }: Props) => {
+const PrimaryButton = ({ text, onPress }: Props) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -15,11 +15,9 @@ const PrimaryButton = ({ onPress }: Props) => {
         borderRadius: 5,
       }}
     >
-      <Text style={{
-         color: "white", 
-         fontSize: 18,
-         textAlign: "center"
-        }}>Cadastrar</Text>
+      <Text style={{ color: "white", fontSize: 18, textAlign: "center" }}>
+        {text}
+      </Text>
     </TouchableOpacity>
   );
 };

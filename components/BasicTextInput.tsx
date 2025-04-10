@@ -1,31 +1,28 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TextInputProps,
+} from "react-native";
 import React from "react";
 
 type Props = {
-  value: string;
   label: string;
   error: boolean;
   errorText: string | null | undefined;
-  onChangeText: (text: string) => void;
-  placeholder: string;
-};
+} & TextInputProps;
 
 const BasicTextInput = ({
   label,
-  value,
-  placeholder,
   error,
   errorText,
-  onChangeText,
+  ...textInputProps
 }: Props) => {
   return (
     <View>
       <Text>{label}</Text>
-      <TextInput
-        value={value}
-        placeholder={placeholder}
-        onChangeText={onChangeText}
-      />
+      <TextInput {...textInputProps} />
       {error && <Text style={styles.error}>{errorText}</Text>}
     </View>
   );

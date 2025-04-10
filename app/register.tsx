@@ -1,15 +1,18 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
-import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import PrimaryButton from "@/components/PrimaryButton";
 import BasicTextInput from "@/components/BasicTextInput";
 
-import { object, string, ref } from "yup";
+import { object, string } from "yup";
 import { Formik } from "formik";
 
-const RegisterSchema = object({
+const registerSchema = object({
   name: string().required("Por favor, preencha o campo nome."),
-  email: string().email("Por favor, preencha o campo email."),
-  password: string().min(8, "A senha deve ter pelo menos 8 caracteres."),
+  email: string()
+    .required("Por favor, preencha o e-mail")
+    .email("Por favor, preencha o campo email."),
+  password: string()
+    .required()
+    .min(8, "A senha deve ter pelo menos 8 caracteres."),
   confirmPassword: string().required(
     "Por favor, preencha o campo confirmar senha."
   ),
@@ -41,7 +44,7 @@ const Register = () => {
           password: "",
           confirmPassword: "",
         }}
-        validationSchema={RegisterSchema}
+        validationSchema={registerSchema}
         onSubmit={handleRegister}
       >
         {({ values, handleChange, handleSubmit, errors }) => (
@@ -69,6 +72,7 @@ const Register = () => {
               errorText={errors.password}
               onChangeText={handleChange("password")}
               placeholder="Digite sua senha"
+              secureTextEntry
             />
             <BasicTextInput
               value={values.confirmPassword}
@@ -77,6 +81,7 @@ const Register = () => {
               errorText={errors.confirmPassword}
               onChangeText={handleChange("confirmPassword")}
               placeholder="Digite sua senha novamente"
+              secureTextEntry
             />
             <PrimaryButton onPress={() => handleSubmit()} />
           </>
