@@ -4,6 +4,7 @@ import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import PrimaryButton from "@/components/PrimaryButton";
 import { zodResolver } from "@hookform/resolvers/zod";
+import SmartTextInput from "@/components/SmartTextInput";
 
 const addressSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -15,7 +16,9 @@ const addressSchema = z.object({
   zipCode: z.string().min(8, "Zip code must be at least 8 characters"),
 });
 
-const Address = () => {
+type AddressFormData = z.infer<typeof addressSchema>;
+
+const AddressScreen = () => {
   const {
     control,
     handleSubmit,
@@ -24,109 +27,60 @@ const Address = () => {
     resolver: zodResolver(addressSchema),
   });
 
-  function handleAddressSubmit(data: any) {
+  function handleAddressSubmit(data: AddressFormData) {
     console.log("Address submitted:", data);
   }
 
   return (
     <View style={styles.container}>
-      <Controller
+      <SmartTextInput
         control={control}
         name="zipCode"
-        render={({ field: { onChange, value } }) => (
-          <BasicTextInput
-            onChangeText={onChange}
-            value={value}
-            label="CEP"
-            error={!!errors.zipCode}
-            errorText={errors.zipCode?.message}
-            placeholder="00000-000"
-          />
-        )}
+        label="CEP"
+        error={errors.zipCode?.message}
+        placeholder="00000-000"
       />
-      <Controller
+      <SmartTextInput
         control={control}
         name="street"
-        render={({ field: { onChange, value } }) => (
-          <BasicTextInput
-            onChangeText={onChange}
-            value={value}
-            label="Rua"
-            error={!!errors.street}
-            errorText={errors.street?.message}
-            placeholder="Av Paulista"
-          />
-        )}
+        label="Rua"
+        error={errors.street?.message}
+        placeholder="Nome da rua"
       />
-      <Controller
+      <SmartTextInput
         control={control}
         name="number"
-        render={({ field: { onChange, value } }) => (
-          <BasicTextInput
-            onChangeText={onChange}
-            value={value}
-            label="Numero"
-            error={!!errors.number}
-            errorText={errors.number?.message}
-            placeholder="1221"
-          />
-        )}
+        label="Número"
+        error={errors.number?.message}
+        placeholder="Número da casa/apartamento"
       />
-      <Controller
+      <SmartTextInput
         control={control}
         name="complement"
-        render={({ field: { onChange, value } }) => (
-          <BasicTextInput
-            onChangeText={onChange}
-            value={value}
-            label="Complemento"
-            error={!!errors.complement}
-            errorText={errors.complement?.message}
-            placeholder="3o andar"
-          />
-        )}
+        label="Complemento"
+        error={errors.complement?.message}
+        placeholder="Complemento (opcional)"
       />
-      <Controller
+      <SmartTextInput
         control={control}
         name="city"
-        render={({ field: { onChange, value } }) => (
-          <BasicTextInput
-            onChangeText={onChange}
-            value={value}
-            label="Cidade"
-            error={!!errors.city}
-            errorText={errors.city?.message}
-            placeholder="São Paulo"
-          />
-        )}
+        label="Cidade"
+        error={errors.city?.message}
+        placeholder="Nome da cidade"
       />
-      <Controller
+      <SmartTextInput
         control={control}
         name="state"
-        render={({ field: { onChange, value } }) => (
-          <BasicTextInput
-            onChangeText={onChange}
-            value={value}
-            label="Estado"
-            error={!!errors.state}
-            errorText={errors.state?.message}
-            placeholder="SP"
-          />
-        )}
+        label="Estado"
+        error={errors.state?.message}
+        placeholder="Nome do estado"
       />
-      <Controller
+      <SmartTextInput
         control={control}
         name="name"
-        render={({ field: { onChange, value } }) => (
-          <BasicTextInput
-            onChangeText={onChange}
-            value={value}
-            label="Nome"
-            error={!!errors.name}
-            errorText={errors.name?.message}
-            placeholder="Minha Casa"
-          />
-        )}
+        label="Nome"
+        error={errors.name?.message}
+        placeholder="Minha casa"
       />
       <PrimaryButton
         text="Salvar"
@@ -136,7 +90,7 @@ const Address = () => {
   );
 };
 
-export default Address;
+export default AddressScreen;
 
 const styles = StyleSheet.create({
   container: {

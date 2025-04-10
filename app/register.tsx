@@ -83,7 +83,7 @@ const Register = () => {
               placeholder="Digite sua senha novamente"
               secureTextEntry
             />
-            <PrimaryButton onPress={() => handleSubmit()} />
+            <PrimaryButton onPress={() => handleSubmit()} text={""} />
           </>
         )}
       </Formik>
